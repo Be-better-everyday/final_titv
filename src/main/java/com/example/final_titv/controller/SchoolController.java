@@ -15,31 +15,5 @@ import org.springframework.web.bind.annotation.*;
 public class SchoolController {
     private SchoolRepository schoolRepository;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<School> getSchoolById(@PathVariable Integer id) throws JsonProcessingException {
-        School referenceById = schoolRepository.findById(id).orElse(null);
-        System.out.println("_______________");
-//        ObjectMapper mapper = new ObjectMapper();
-//        String json = mapper.writeValueAsString(referenceById);
-//        System.out.println(json);
-        return ResponseEntity.status(HttpStatus.FOUND).body(referenceById);
-    }
 
-    @GetMapping("/notNull/{id}")
-    public School getSchoolByIdNotNull(@PathVariable Integer id) {
-        School referenceById = schoolRepository.findById(id).orElse(null);
-        System.out.println("_______________");
-        return referenceById;
-    }
-
-    @GetMapping("/eager/{id}")
-    public ResponseEntity<School> getSchoolByIdEager(@PathVariable Integer id) throws JsonProcessingException {
-
-        School referenceById = schoolRepository.findByIdJoinFetchTClassSet(id);
-        System.out.println("_______________");
-//        ObjectMapper mapper = new ObjectMapper();
-//        String json = mapper.writeValueAsString(referenceById);
-//        System.out.println(json);
-        return ResponseEntity.status(HttpStatus.FOUND).body(referenceById);
-    }
 }
