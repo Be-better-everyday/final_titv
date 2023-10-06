@@ -10,6 +10,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,5 +28,26 @@ public class SchoolController {
             (@Valid @RequestBody @JsonView(Views.InputView.class) SchoolDto schoolDto) {
         System.out.println(schoolDto);
         return schoolService.save(schoolDto);
+    }
+
+    @GetMapping("/{id}")
+//    @JsonView(Views.InputView.class)
+    public ResponseEntity<SchoolDto> getStudent(@PathVariable Integer id){
+//        return schoolService.getSchoolById(id);
+        return ResponseEntity.ok(schoolService.getSchoolById(id));
+    }
+
+    @GetMapping
+    public  Page<SchoolDto> getPageStudentByCondition(
+            Pageable pageable,
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "cutoffScore", required = false) Double cutoffScore
+    ){
+        return schoolService.getPageStudentByCondition(pageable, name, cutoffScore);
+    }
+
+    @PutMapping("/{id}")
+    public SchoolDto updateStudentById(@PathVariable Integer id, @RequestBody SchoolDto schoolDto){
+        return schoolService.updateSchoolById(id, schoolDto);
     }
 }

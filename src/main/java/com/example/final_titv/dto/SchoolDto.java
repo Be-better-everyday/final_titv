@@ -10,6 +10,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.ZonedDateTime;
 
 @Data
 @NoArgsConstructor
@@ -32,4 +35,6 @@ public class SchoolDto {
     @NotNull
     @JsonView(Views.InputView.class)
     private Integer cutoffScore;
+    protected ZonedDateTime createdAt;
+    protected ZonedDateTime updatedAt;
 }
