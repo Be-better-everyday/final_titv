@@ -40,6 +40,8 @@ public class School {
 //    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private Set<TClass> tClassSet;
+    @Column(name = "cutoff_score")
+    private Integer cutoffScore; //admission cutoff score
     public void addTClass(TClass tClass){
         try {
             if(tClassSet == null){

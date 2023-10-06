@@ -1,23 +1,35 @@
 package com.example.final_titv.dto;
 
+import com.example.final_titv.dto.view.Views;
 import com.example.final_titv.entity.School;
 import com.example.final_titv.repository.SchoolRepository;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class SchoolDto {
+    private Integer id;
+    @JsonView(Views.InputView.class)
+    @NotBlank
     private String name;
+    @JsonView(Views.InputView.class)
+    @NotBlank
     private String address;
+    @JsonView(Views.InputView.class)
+    @Pattern(regexp = "^(\\d{10}|\\d{11}|\\d{12})$",
+            message = "This phone number must include 10-12 number")
     private String phoneNumber;
-
-    public void fromSchool(School school){
-        setName(school.getName());
-        setAddress(school.getAddress());
-        setPhoneNumber(school.getPhoneNumber());
-    }
+    @Min(0)
+    @Max(30)
+    @NotNull
+    @JsonView(Views.InputView.class)
+    private Integer cutoffScore;
 }
