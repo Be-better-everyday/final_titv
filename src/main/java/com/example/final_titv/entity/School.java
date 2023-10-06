@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,15 +17,16 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Builder
-@ToString(exclude = "tClassSet")
+@SuperBuilder
+//@ToString(exclude = "tClassSet")
+@ToString(callSuper = true)
 @Table(name = "schools")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class School {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class School extends BaseEntity{
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Integer id;
     private String name;
     @Column(columnDefinition = "TEXT")
     private String address;
@@ -35,10 +37,11 @@ public class School {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH
     })
+    @ToString.Exclude
 //    @JsonIgnore
 //    @JsonManagedReference
 //    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
+//    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private Set<TClass> tClassSet;
     @Column(name = "cutoff_score")
     private Integer cutoffScore; //admission cutoff score
@@ -54,16 +57,19 @@ public class School {
     }
 
     @Override
+//    public int hashCode() {
+//        return Objects.hash(super.getId(), name, address, phoneNumber);
+//    }
     public int hashCode() {
         return Objects.hash(id, name, address, phoneNumber);
     }
 
-    public static void main(String[] args) throws JsonProcessingException {
-        School school = School.builder()
-                .name("FTU").address("Lang pagoda Street").phoneNumber("000000FTU")
-                .build();
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(school);
-        System.out.println(json);
-    }
+//    public static void main(String[] args) throws JsonProcessingException {
+//        School school = School.builder()
+//                .name("FTU").address("Lang pagoda Street").phoneNumber("000000FTU")
+//                .build();
+//        ObjectMapper mapper = new ObjectMapper();
+//        String json = mapper.writeValueAsString(school);
+//        System.out.println(json);
+//    }
 }

@@ -4,24 +4,23 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@SuperBuilder
 @ToString(exclude = "tClass", callSuper = true)
 @Table(name = "students")
 @EqualsAndHashCode(callSuper = true)
-@SuperBuilder
+@Entity
 public class Student extends Person{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Integer id;
     @ManyToOne(cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH
     })
     private TClass tClass;
-//    private Parents parents;
 
 
 //    @Override
@@ -31,4 +30,9 @@ public class Student extends Person{
 //                ", tClass=" + tClass +
 //                '}';
 //    }
+
+    public static void main(String[] args) {
+        Student student = new Student();
+        System.out.println(student);
+    }
 }

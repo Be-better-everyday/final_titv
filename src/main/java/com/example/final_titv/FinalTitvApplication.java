@@ -75,17 +75,19 @@ public class FinalTitvApplication {
     private void testLv3() {
         School school = schoolRepository.findByNameJoinFetchTClassSet("FTU");
         System.out.println(school);
-        System.out.println("_____***_____");
-        display(school.getTClassSet());
-
-        school.getTClassSet().forEach(t -> System.out.println(t.getSchool()));
+        System.out.println("_____***_____Lv3");
+//        display(school.getTClassSet());
+//        school.getTClassSet().forEach(t -> System.out.println(t.getSchool()));
+        tClassRepository.findBySchool(school).forEach(t -> System.out.println("* ___ " + t.getSchool()));
     }
 
     private void testLv2() {
         School school = schoolRepository.findByNameJoinFetchTClassSet("FTU");
         System.out.println(school);
-        System.out.println("_____***_____");
-        display(school.getTClassSet());
+        System.out.println("_____***_____Lv2");
+        school.getTClassSet().forEach(System.out::println);
+//        System.out.println(school.getTClassSet());
+//        display(school.getTClassSet());
         TClass class3 = TClass.builder()
                 .tClassKey(new TClassKey(null, "12C"))
                 .school(school).grade(12)

@@ -25,7 +25,8 @@ public class TeacherClass {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH
     })
-    @JoinColumn(name = "school_id")
-    @JoinColumn(name = "class_name")
+//    @JoinColumn(name = "school_id")
+//    @JoinColumn(name = "class_name")
+    @JoinColumn(name = "class_id")
     private TClass tClass;
 }

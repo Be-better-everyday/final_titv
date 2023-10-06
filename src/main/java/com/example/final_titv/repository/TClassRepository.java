@@ -1,5 +1,6 @@
 package com.example.final_titv.repository;
 
+import com.example.final_titv.entity.School;
 import com.example.final_titv.entity.TClass;
 import com.example.final_titv.entity.compositeKey.TClassKey;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +16,5 @@ public interface TClassRepository extends JpaRepository<TClass, TClassKey> {
     @Query("SELECT t FROM TClass t JOIN FETCH t.teacherClasses WHERE t.tClassKey.className = :className")
     public List<TClass> findByTClassKeyClassNameJoinFetchTeacherClass(@Param("className")String className);
 
-//    public TClass findBy
+    public List<TClass> findBySchool(School school);
 }
