@@ -25,10 +25,7 @@ public class TClass extends BaseEntity {
     @Column(name = "class_name")
     @EqualsAndHashCode.Include
     private String className;
-
     private Integer grade;
-    @Column(name = "academy_year")
-    private Integer academicYear;
     @OneToOne(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.DETACH, CascadeType.MERGE,
