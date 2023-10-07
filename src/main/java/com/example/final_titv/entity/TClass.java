@@ -1,12 +1,9 @@
 package com.example.final_titv.entity;
 
-import com.example.final_titv.entity.compositeKey.TClassKey;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -20,8 +17,7 @@ import java.util.Set;
 )
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class TClass extends BaseEntity {
-    //    @Column(unique = true)
-//    private TClassKey tClassKey;    // include "schoolId" and "className"
+
     @Column(name = "school_id")
     @EqualsAndHashCode.Include
     private Integer schoolId;

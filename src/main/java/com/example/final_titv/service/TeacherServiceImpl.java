@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class EmployeeService {
+public class TeacherServiceImpl implements TeacherService{
     private TeacherRepository teacherRepository;
 
-    private Teacher save(Teacher teacher){
+    public Teacher save(Teacher teacher){
         return teacherRepository.save(teacher);
     }
 }

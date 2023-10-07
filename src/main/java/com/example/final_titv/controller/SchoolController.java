@@ -2,17 +2,12 @@ package com.example.final_titv.controller;
 
 import com.example.final_titv.dto.SchoolDto;
 import com.example.final_titv.dto.view.Views;
-import com.example.final_titv.entity.School;
-import com.example.final_titv.repository.SchoolRepository;
-import com.example.final_titv.service.SchoolService;
+import com.example.final_titv.service.SchoolServiceImpl;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,20 +16,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/school")
 
 public class SchoolController {
-    private SchoolService schoolService;
+    private SchoolServiceImpl schoolServiceImpl;
 
     @PostMapping
     public SchoolDto saveSchool
             (@Valid @RequestBody @JsonView(Views.InputView.class) SchoolDto schoolDto) {
         System.out.println(schoolDto);
-        return schoolService.save(schoolDto);
+        return schoolServiceImpl.save(schoolDto);
     }
 
     @GetMapping("/{id}")
 //    @JsonView(Views.InputView.class)
     public ResponseEntity<SchoolDto> getStudent(@PathVariable Integer id){
 //        return schoolService.getSchoolById(id);
-        return ResponseEntity.ok(schoolService.getSchoolById(id));
+        return ResponseEntity.ok(schoolServiceImpl.getSchoolById(id));
     }
 
     @GetMapping
@@ -43,16 +38,16 @@ public class SchoolController {
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "cutoffScore", required = false) Double cutoffScore
     ){
-        return schoolService.getPageStudentByCondition(pageable, name, cutoffScore);
+        return schoolServiceImpl.getPageStudentByCondition(pageable, name, cutoffScore);
     }
 
     @PutMapping("/{id}")
     public SchoolDto updateStudentById(@PathVariable Integer id, @RequestBody SchoolDto schoolDto){
-        return schoolService.updateSchoolById(id, schoolDto);
+        return schoolServiceImpl.updateSchoolById(id, schoolDto);
     }
 
     @DeleteMapping("/{id}")
     public SchoolDto deleteSchool(@PathVariable Integer id){
-        return schoolService.deleteById(id);
+        return schoolServiceImpl.deleteById(id);
     }
 }

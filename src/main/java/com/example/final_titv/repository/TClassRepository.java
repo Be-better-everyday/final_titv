@@ -2,7 +2,7 @@ package com.example.final_titv.repository;
 
 import com.example.final_titv.entity.School;
 import com.example.final_titv.entity.TClass;
-import com.example.final_titv.entity.compositeKey.TClassKey;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;

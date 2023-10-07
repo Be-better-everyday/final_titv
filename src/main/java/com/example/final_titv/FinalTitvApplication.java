@@ -4,7 +4,6 @@ import com.example.final_titv.entity.Teacher;
 import com.example.final_titv.entity.School;
 import com.example.final_titv.entity.Student;
 import com.example.final_titv.entity.TClass;
-import com.example.final_titv.entity.compositeKey.TClassKey;
 import com.example.final_titv.repository.TeacherRepository;
 import com.example.final_titv.repository.SchoolRepository;
 import com.example.final_titv.repository.StudentRepository;
