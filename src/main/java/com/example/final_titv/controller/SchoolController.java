@@ -50,4 +50,9 @@ public class SchoolController {
     public SchoolDto updateStudentById(@PathVariable Integer id, @RequestBody SchoolDto schoolDto){
         return schoolService.updateSchoolById(id, schoolDto);
     }
+
+    @DeleteMapping("/{id}")
+    public SchoolDto deleteSchool(@PathVariable Integer id){
+        return schoolService.deleteById(id);
+    }
 }

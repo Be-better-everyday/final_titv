@@ -38,10 +38,6 @@ public class School extends BaseEntity{
             CascadeType.PERSIST, CascadeType.REFRESH
     })
     @ToString.Exclude
-//    @JsonIgnore
-//    @JsonManagedReference
-//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-//    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private Set<TClass> tClassSet;
     @Column(name = "cutoff_score")
     private Double cutoffScore; //admission cutoff score

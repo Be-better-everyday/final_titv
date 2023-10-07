@@ -40,7 +40,6 @@ public class FinalTitvApplication {
 //            testLv1();
 //            testLv2();
 //            testLv3();
-//            testConnectExisting();
 //            addNewSchool();
         };
     }
@@ -50,12 +49,12 @@ public class FinalTitvApplication {
                 .name("NTMK").address("Bac Tu Liem")
                 .build();
         TClass class3 = TClass.builder()
-                .tClassKey(new TClassKey(0, "12A"))
+//                .tClassKey(new TClassKey(0, "12A"))
                 .school(school).grade(12)
                 .build();
 
         TClass class4 = TClass.builder()
-                .tClassKey(new TClassKey(0, "12B"))
+//                .tClassKey(new TClassKey(0, "12B"))
                 .school(school).grade(12)
                 .build();
         school.addTClass(class3);
@@ -63,14 +62,6 @@ public class FinalTitvApplication {
         schoolRepository.save(school);
     }
 
-    private void testConnectExisting() {
-        Teacher teacher = teacherRepository.getReferenceById(3);
-//        TClass tClass = tClassRepository.getReferenceById(new TClassKey(1, "12A"));
-//        TClass tClass = tClassRepository.getById(new TClassKey(1, "12A"));
-        TClass tClass = tClassRepository.findByTClassKeyClassNameJoinFetchTeacherClass("12A").get(0);
-        tClass.addTeacherToTeacherClass(teacher);
-        tClassRepository.save(tClass);
-    }
 
     private void testLv3() {
         School school = schoolRepository.findByNameJoinFetchTClassSet("FTU");
@@ -89,7 +80,7 @@ public class FinalTitvApplication {
 //        System.out.println(school.getTClassSet());
 //        display(school.getTClassSet());
         TClass class3 = TClass.builder()
-                .tClassKey(new TClassKey(null, "12C"))
+//                .tClassKey(new TClassKey(null, "12C"))
                 .school(school).grade(12)
                 .build();
         school.addTClass(class3);
@@ -104,12 +95,12 @@ public class FinalTitvApplication {
                 .build();
 
         TClass class1 = TClass.builder()
-                .tClassKey(new TClassKey(0, "12A"))
+//                .tClassKey(new TClassKey(0, "12A"))
                 .school(school).grade(12)
                 .build();
 
         TClass class2 = TClass.builder()
-                .tClassKey(new TClassKey(0, "12B"))
+//                .tClassKey(new TClassKey(0, "12B"))
                 .school(school).grade(12)
                 .build();
 

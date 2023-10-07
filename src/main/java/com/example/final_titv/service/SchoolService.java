@@ -36,23 +36,23 @@ public class SchoolService {
     public Page<SchoolDto> getPageStudentByCondition(
             Pageable pageable, String name, Double cutoffScore){
         Page<School> schoolPage = schoolRepository.findPageSchoolBySchool(pageable, name, cutoffScore);
+        schoolPage.forEach(System.out::println);
+        System.out.println("___***___");
         return schoolPage.map(schoolMapper::fromSchool);
     }
-
-    public void deleteById(Integer id){
-        School school = schoolRepository.findById(id).orElse(null);
-        if(school == null) throw new RuntimeException("School is not found!");
-        schoolRepository.delete(school);
-    }
-
 
     public SchoolDto updateSchoolById(Integer id, SchoolDto schoolDto) {
         School school = schoolRepository.findById(id).orElse(null);
         if(school == null) throw new RuntimeException("School is not found!");
-//        schoolDto.setId(id);
-//        school = schoolRepository.save(schoolMapper.toSchool(schoolDto));
         schoolMapper.updateSchool(schoolDto, school);
         schoolRepository.save(school);
+        return schoolMapper.fromSchool(school);
+    }
+
+    public SchoolDto deleteById(Integer id){
+        School school = schoolRepository.findById(id).orElse(null);
+        if(school == null) throw new RuntimeException("School is not found!");
+        schoolRepository.delete(school);
         return schoolMapper.fromSchool(school);
     }
 }

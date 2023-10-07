@@ -12,9 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TClassRepository extends JpaRepository<TClass, TClassKey> {
-    @Query("SELECT t FROM TClass t JOIN FETCH t.teacherClasses WHERE t.tClassKey.className = :className")
-    public List<TClass> findByTClassKeyClassNameJoinFetchTeacherClass(@Param("className")String className);
+public interface TClassRepository extends JpaRepository<TClass, Integer> {
 
     public List<TClass> findBySchool(School school);
 }

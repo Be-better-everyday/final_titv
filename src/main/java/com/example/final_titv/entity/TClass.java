@@ -13,18 +13,23 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-//@EqualsAndHashCode
 @ToString(exclude = {"school", "teacherClasses", "studentSet", "homeroomTeacher"})
 @Builder
 @Table(name = "classes"
-//        ,uniqueConstraints = {@UniqueConstraint(columnNames = {"personNumber", "isActive"})}
+        ,uniqueConstraints = {@UniqueConstraint(columnNames = {"school_id", "class_name"})}
 )
-public class TClass extends BaseEntity{
-    //    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Integer id;
-    @Column(unique = true)
-    private TClassKey tClassKey;    // include "schoolId" and "className"
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class TClass extends BaseEntity {
+    //    @Column(unique = true)
+//    private TClassKey tClassKey;    // include "schoolId" and "className"
+    @Column(name = "school_id")
+    @EqualsAndHashCode.Include
+    private Integer schoolId;
+
+    @Column(name = "class_name")
+    @EqualsAndHashCode.Include
+    private String className;
+
     private Integer grade;
     @Column(name = "academy_year")
     private Integer academicYear;
@@ -42,7 +47,6 @@ public class TClass extends BaseEntity{
     })
     @MapsId("schoolId")
     @JoinColumn(name = "school_id")
-    @JsonBackReference
     private School school;
     @OneToMany(mappedBy = "tClass", cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
@@ -72,25 +76,5 @@ public class TClass extends BaseEntity{
             teacherClasses = new HashSet<>();
         }
         teacherClasses.add(teacherClass);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        TClass tClass = (TClass) o;
-
-        if (!Objects.equals(tClassKey, tClass.tClassKey)) return false;
-        if (!Objects.equals(grade, tClass.grade)) return false;
-        return Objects.equals(academicYear, tClass.academicYear);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = tClassKey != null ? tClassKey.hashCode() : 0;
-        result = 31 * result + (grade != null ? grade.hashCode() : 0);
-        result = 31 * result + (academicYear != null ? academicYear.hashCode() : 0);
-        return result;
     }
 }
