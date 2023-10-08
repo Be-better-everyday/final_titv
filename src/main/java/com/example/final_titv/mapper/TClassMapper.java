@@ -7,7 +7,7 @@ import com.example.final_titv.entity.TClass;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface TClassMapper {
     TClassMapper INSTANCE = Mappers.getMapper(TClassMapper.class);
     TClassDto fromTClass(TClass tClass);

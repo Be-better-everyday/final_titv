@@ -17,8 +17,8 @@ import java.util.Set;
 )
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class TClass extends BaseEntity {
-
-    @Column(name = "school_id")
+    @Transient
+//    @Column(name = "school_id")
     @EqualsAndHashCode.Include
     private Integer schoolId;
 
@@ -38,7 +38,7 @@ public class TClass extends BaseEntity {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH
     })
-    @MapsId("schoolId")
+//    @MapsId("schoolId")
     @JoinColumn(name = "school_id")
     private School school;
     @OneToMany(mappedBy = "tClass", cascade = {

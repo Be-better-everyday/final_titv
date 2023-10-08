@@ -1,6 +1,8 @@
 package com.example.final_titv.dto;
 
 import com.example.final_titv.dto.view.Views;
+import com.example.final_titv.entity.School;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
@@ -11,6 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TClassDto {
     private Integer id;
     @JsonView(Views.InputView.class)
@@ -22,4 +25,5 @@ public class TClassDto {
     @JsonView(Views.InputView.class)
     @NotNull
     private Integer grade;
+    private School school;
 }
