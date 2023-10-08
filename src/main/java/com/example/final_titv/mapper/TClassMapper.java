@@ -5,11 +5,19 @@ import com.example.final_titv.dto.TClassDto;
 import com.example.final_titv.entity.School;
 import com.example.final_titv.entity.TClass;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+//@Mapper(componentModel = "spring", uses = {SchoolMapper.class})
+@Mapper(componentModel = "spring", uses = {SchoolMapper.class})
 public interface TClassMapper {
     TClassMapper INSTANCE = Mappers.getMapper(TClassMapper.class);
-    TClassDto fromTClass(TClass tClass);
-    TClass toTClass(TClassDto tClassDto);
+
+    @Mapping(target = "schoolId",
+            expression = "java(tClass.getSchool().getId())")
+    @Mapping(source = "school", target = "schoolDto")
+    TClassDto toDto(TClass tClass);
+
+    @Mapping(source = "schoolId", target = "school")
+    TClass toEntity(TClassDto tClassDto);
 }

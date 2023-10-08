@@ -11,17 +11,11 @@ import java.util.Set;
 @NoArgsConstructor
 @Data
 @ToString(exclude = {"school", "teacherClasses", "studentSet", "homeroomTeacher"})
-@Builder
 @Table(name = "classes"
         ,uniqueConstraints = {@UniqueConstraint(columnNames = {"school_id", "class_name"})}
 )
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class TClass extends BaseEntity {
-    @Transient
-//    @Column(name = "school_id")
-    @EqualsAndHashCode.Include
-    private Integer schoolId;
-
     @Column(name = "class_name")
     @EqualsAndHashCode.Include
     private String className;
@@ -38,7 +32,6 @@ public class TClass extends BaseEntity {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH
     })
-//    @MapsId("schoolId")
     @JoinColumn(name = "school_id")
     private School school;
     @OneToMany(mappedBy = "tClass", cascade = {

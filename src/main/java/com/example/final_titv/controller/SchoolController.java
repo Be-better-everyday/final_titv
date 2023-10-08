@@ -20,13 +20,13 @@ public class SchoolController {
 
     @PostMapping
     public SchoolDto saveSchool
-            (@Valid @RequestBody @JsonView(Views.InputView.class) SchoolDto schoolDto) {
+            (@Valid @RequestBody @JsonView(Views.Request.class) SchoolDto schoolDto) {
         System.out.println(schoolDto);
         return schoolServiceImpl.save(schoolDto);
     }
 
     @GetMapping("/{id}")
-//    @JsonView(Views.InputView.class)
+//    @JsonView(Views.Request.class)
     public ResponseEntity<SchoolDto> getStudent(@PathVariable Integer id){
 //        return schoolService.getSchoolById(id);
         return ResponseEntity.ok(schoolServiceImpl.getSchoolById(id));

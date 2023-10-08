@@ -20,21 +20,23 @@ import java.time.ZonedDateTime;
 @ToString
 public class SchoolDto {
     private Integer id;
-    @JsonView(Views.InputView.class)
+    @JsonView(Views.Request.class)
     @NotBlank
     private String name;
-    @JsonView(Views.InputView.class)
+    @JsonView(Views.Request.class)
     @NotBlank
     private String address;
-    @JsonView(Views.InputView.class)
+    @JsonView(Views.Request.class)
     @Pattern(regexp = "^(\\d{10}|\\d{11}|\\d{12})$",
             message = "This phone number must include 10-12 number")
     private String phoneNumber;
     @Min(0)
     @Max(30)
     @NotNull
-    @JsonView(Views.InputView.class)
+    @JsonView(Views.Request.class)
     private Integer cutoffScore;
-    protected ZonedDateTime createdAt;
-    protected ZonedDateTime updatedAt;
+
+
+//    protected ZonedDateTime createdAt;
+//    protected ZonedDateTime updatedAt;
 }

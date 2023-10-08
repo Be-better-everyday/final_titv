@@ -17,7 +17,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@SuperBuilder
 //@ToString(exclude = "tClassSet")
 @ToString(callSuper = true)
 @Table(name = "schools")
@@ -53,19 +52,8 @@ public class School extends BaseEntity{
     }
 
     @Override
-//    public int hashCode() {
-//        return Objects.hash(super.getId(), name, address, phoneNumber);
-//    }
     public int hashCode() {
         return Objects.hash(id, name, address, phoneNumber);
     }
 
-//    public static void main(String[] args) throws JsonProcessingException {
-//        School school = School.builder()
-//                .name("FTU").address("Lang pagoda Street").phoneNumber("000000FTU")
-//                .build();
-//        ObjectMapper mapper = new ObjectMapper();
-//        String json = mapper.writeValueAsString(school);
-//        System.out.println(json);
-//    }
 }

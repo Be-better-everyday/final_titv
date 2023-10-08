@@ -4,4 +4,6 @@ import com.example.final_titv.dto.TClassDto;
 
 public interface TClassService {
     TClassDto saveTClass(TClassDto tClassDto);
+
+    TClassDto getTClassById(Integer id);
 }

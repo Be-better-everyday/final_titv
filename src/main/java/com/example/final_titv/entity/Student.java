@@ -7,7 +7,6 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@SuperBuilder
 @ToString(exclude = "tClass", callSuper = true)
 @Table(name = "students")
 @EqualsAndHashCode(callSuper = true)
@@ -21,15 +20,6 @@ public class Student extends Person{
             CascadeType.PERSIST, CascadeType.REFRESH
     })
     private TClass tClass;
-
-
-//    @Override
-//    public String toString() {
-//        return "Student{" +
-//                "id=" + id +
-//                ", tClass=" + tClass +
-//                '}';
-//    }
 
     public static void main(String[] args) {
         Student student = new Student();

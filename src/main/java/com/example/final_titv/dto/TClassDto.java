@@ -16,14 +16,14 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TClassDto {
     private Integer id;
-    @JsonView(Views.InputView.class)
+    @JsonView(Views.Request.class)
     @NotNull
     private Integer schoolId;
-    @JsonView(Views.InputView.class)
+    @JsonView(Views.Request.class)
     @NotBlank
     private String className;
-    @JsonView(Views.InputView.class)
+    @JsonView(Views.Request.class)
     @NotNull
     private Integer grade;
-    private School school;
+    private SchoolDto schoolDto;
 }

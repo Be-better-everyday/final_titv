@@ -17,7 +17,7 @@ import java.util.Set;
 @ToString(exclude = "teacherClasses")
 //@ToString(onlyExplicitlyIncluded = true)
 
-@SuperBuilder
+//@SuperBuilder
 @Table(name = "teachers")
 
 public class Teacher extends Person {
