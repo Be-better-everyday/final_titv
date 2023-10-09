@@ -1,8 +1,8 @@
 package com.example.final_titv.mapper;
 
-import com.example.final_titv.dto.SchoolDto;
-import com.example.final_titv.dto.TClassDto;
-import com.example.final_titv.entity.School;
+import com.example.final_titv.dto.SchoolResponse;
+import com.example.final_titv.dto.TClassRequest;
+import com.example.final_titv.dto.TClassResponse;
 import com.example.final_titv.entity.TClass;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -13,11 +13,9 @@ import org.mapstruct.factory.Mappers;
 public interface TClassMapper {
     TClassMapper INSTANCE = Mappers.getMapper(TClassMapper.class);
 
-    @Mapping(target = "schoolId",
-            expression = "java(tClass.getSchool().getId())")
-    @Mapping(source = "school", target = "schoolDto")
-    TClassDto toDto(TClass tClass);
+    @Mapping(source = "school", target = "schoolResponse")
+    TClassResponse toDto(TClass tClass);
 
     @Mapping(source = "schoolId", target = "school")
-    TClass toEntity(TClassDto tClassDto);
+    TClass toEntity(TClassRequest tClassRequest);
 }

@@ -1,11 +1,10 @@
 package com.example.final_titv.controller;
 
-import com.example.final_titv.dto.TClassDto;
-import com.example.final_titv.dto.view.Views;
-import com.example.final_titv.mapper.TClassMapper;
-import com.example.final_titv.repository.TClassRepository;
+import com.example.final_titv.dto.SchoolResponse;
+import com.example.final_titv.dto.TClassRequest;
+import com.example.final_titv.dto.TClassResponse;
+
 import com.example.final_titv.service.TClassService;
-import com.example.final_titv.service.TClassServiceImpl;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +16,12 @@ public class TClassController {
     private TClassService tClassService;
 
     @PostMapping
-    public TClassDto saveTClass(@JsonView(Views.Request.class) @RequestBody TClassDto tClassDto){
-        return tClassService.saveTClass(tClassDto);
+    public TClassResponse saveTClass( @RequestBody TClassRequest tClassRequest){
+        return tClassService.saveTClass(tClassRequest);
     }
 
     @GetMapping("/{id}")
-    public TClassDto getTClassById(@PathVariable Integer id){
+    public TClassResponse getTClassById(@PathVariable Integer id){
         return tClassService.getTClassById(id);
     }
 }

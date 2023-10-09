@@ -1,29 +1,27 @@
 package com.example.final_titv.dto;
 
-import com.example.final_titv.dto.view.Views;
-import com.example.final_titv.entity.School;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TClassDto {
+public class TClassResponse {
     private Integer id;
-    @JsonView(Views.Request.class)
-    @NotNull
-    private Integer schoolId;
-    @JsonView(Views.Request.class)
+    @JsonProperty("school")
+    private SchoolResponse schoolResponse;
     @NotBlank
     private String className;
-    @JsonView(Views.Request.class)
     @NotNull
     private Integer grade;
-    private SchoolDto schoolDto;
 }

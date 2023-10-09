@@ -1,6 +1,7 @@
 package com.example.final_titv.service;
 
-import com.example.final_titv.dto.SchoolDto;
+import com.example.final_titv.dto.SchoolRequest;
+import com.example.final_titv.dto.SchoolResponse;
 import com.example.final_titv.entity.School;
 import com.example.final_titv.entity.TClass;
 import com.example.final_titv.exception.ApiException;
@@ -23,19 +24,19 @@ public class SchoolServiceImpl implements SchoolService{
     private SchoolMapper schoolMapper;
     // This bean is create using method "getSchoolMapper" in BeanConfig
 
-    public SchoolDto save(SchoolDto schoolDto){
-        School school = schoolMapper.toEntity(schoolDto);
+    public SchoolResponse save(SchoolRequest schoolRequest){
+        School school = schoolMapper.toEntity(schoolRequest);
         school = schoolRepository.save(school);
 //        System.out.println(school.getId());
         return schoolMapper.toDto(school);
     }
-    public SchoolDto getSchoolById(Integer id){
+    public SchoolResponse getSchoolById(Integer id){
         School school = schoolRepository.findById(id)
                 .orElseThrow(()-> new ApiException("Not Found!"));
         return schoolMapper.toDto(school);
     }
 
-    public Page<SchoolDto> getPageStudentByCondition(
+    public Page<SchoolResponse> getPageStudentByCondition(
             Pageable pageable, String name, Double cutoffScore){
         Page<School> schoolPage = schoolRepository.findPageSchoolBySchool(pageable, name, cutoffScore);
         schoolPage.forEach(System.out::println);
@@ -43,16 +44,16 @@ public class SchoolServiceImpl implements SchoolService{
         return schoolPage.map(schoolMapper::toDto);
     }
 
-    public SchoolDto updateSchoolById(Integer id, SchoolDto schoolDto) {
+    public SchoolResponse updateSchoolById(Integer id, SchoolRequest schoolRequest) {
         School school = schoolRepository.findById(id).orElse(null);
         if(school == null) throw new RuntimeException("School is not found!");
 
-        schoolMapper.updateSchool(schoolDto, school);
+        schoolMapper.updateSchool(schoolRequest, school);
         schoolRepository.save(school);
         return schoolMapper.toDto(school);
     }
 
-    public SchoolDto deleteById(Integer id){
+    public SchoolResponse deleteById(Integer id){
         School school = schoolRepository.findById(id).orElse(null);
         if(school == null) throw new RuntimeException("School is not found!");
 

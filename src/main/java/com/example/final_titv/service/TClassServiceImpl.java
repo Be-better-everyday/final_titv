@@ -1,7 +1,8 @@
 package com.example.final_titv.service;
 
-import com.example.final_titv.dto.TClassDto;
-import com.example.final_titv.entity.School;
+import com.example.final_titv.dto.SchoolResponse;
+import com.example.final_titv.dto.TClassRequest;
+import com.example.final_titv.dto.TClassResponse;
 import com.example.final_titv.entity.TClass;
 import com.example.final_titv.exception.ApiException;
 import com.example.final_titv.mapper.TClassMapper;
@@ -18,24 +19,20 @@ public class TClassServiceImpl implements TClassService{
     private SchoolRepository schoolRepository;
     @Override
     /*  This method may throw "PSQLException: ERROR: duplicate key value violates unique constraint" */
-    public TClassDto saveTClass(TClassDto tClassDto) {
-        TClass tClass = tClassMapper.toEntity(tClassDto);
+    public TClassResponse saveTClass(TClassRequest tClassRequest) {
+        System.out.println(tClassRequest);
+        TClass tClass = tClassMapper.toEntity(tClassRequest);
+        tClassRepository.saveAndFlush(tClass);
+
         System.out.println("___***___");
         System.out.println(tClass);
-//        School school;
-//        if(tClassDto.getSchoolId() != null){
-//            school = schoolRepository.findById(tClassDto.getSchoolId())
-//                    .orElseThrow(() -> new RuntimeException("School not found!"));
-//            tClass.setSchool(school);
-//            tClassRepository.saveAndFlush(tClass);
-//        }
-        TClassDto tClassDto1 = tClassMapper.toDto(tClass);
-        System.out.println(tClassDto1);
-        return tClassDto1;
+        TClassResponse tClassResponse1 = tClassMapper.toDto(tClass);
+        System.out.println(tClassResponse1);
+        return tClassResponse1;
     }
 
     @Override
-    public TClassDto getTClassById(Integer id) {
+    public TClassResponse getTClassById(Integer id) {
         return tClassMapper.toDto(tClassRepository.findById(id)
                 .orElseThrow(()->new ApiException("TClass not found!")));
     }

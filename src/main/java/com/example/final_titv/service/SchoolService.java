@@ -1,15 +1,14 @@
 package com.example.final_titv.service;
 
-import com.example.final_titv.dto.SchoolDto;
-import com.example.final_titv.entity.School;
-import com.example.final_titv.exception.ApiException;
+import com.example.final_titv.dto.SchoolRequest;
+import com.example.final_titv.dto.SchoolResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface SchoolService {
-    public SchoolDto save(SchoolDto schoolDto);
-    public SchoolDto getSchoolById(Integer id);
-    public Page<SchoolDto> getPageStudentByCondition(Pageable pageable, String name, Double cutoffScore);
-    public SchoolDto updateSchoolById(Integer id, SchoolDto schoolDto);
-    public SchoolDto deleteById(Integer id);
+    public SchoolResponse save(SchoolRequest schoolRequest);
+    public SchoolResponse getSchoolById(Integer id);
+    public Page<SchoolResponse> getPageStudentByCondition(Pageable pageable, String name, Double cutoffScore);
+    public SchoolResponse updateSchoolById(Integer id, SchoolRequest schoolRequest);
+    public SchoolResponse deleteById(Integer id);
 }

@@ -1,6 +1,7 @@
 package com.example.final_titv.mapper;
 
-import com.example.final_titv.dto.SchoolDto;
+import com.example.final_titv.dto.SchoolRequest;
+import com.example.final_titv.dto.SchoolResponse;
 import com.example.final_titv.entity.School;
 import org.mapstruct.*;
 
@@ -9,12 +10,12 @@ public interface SchoolMapper {
     School ToEntity(Integer id);
 
 
-    SchoolDto toDto(School school);
+    SchoolResponse toDto(School school);
 
 //    @Mapping(source = "schoolId", target = "school")
-    School toEntity(SchoolDto schoolDto);
+    School toEntity(SchoolRequest schoolRequest);
 
     @Mapping(target = "id", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateSchool(SchoolDto schoolDto, @MappingTarget School school);
+    void updateSchool(SchoolRequest schoolRequest, @MappingTarget School school);
 }
