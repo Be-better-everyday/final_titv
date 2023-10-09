@@ -11,4 +11,6 @@ public interface SchoolService {
     public Page<SchoolResponse> getPageStudentByCondition(Pageable pageable, String name, Double cutoffScore);
     public SchoolResponse updateSchoolById(Integer id, SchoolRequest schoolRequest);
     public SchoolResponse deleteById(Integer id);
+
+    SchoolResponse getSchoolWithClassById(Integer id);
 }

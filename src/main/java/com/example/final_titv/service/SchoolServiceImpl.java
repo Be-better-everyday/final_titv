@@ -36,6 +36,18 @@ public class SchoolServiceImpl implements SchoolService{
         return schoolMapper.toDto(school);
     }
 
+    @Override
+    public SchoolResponse getSchoolWithClassById(Integer id) {
+        School school = null;
+        try {
+            school = schoolRepository.findByIdJoinFetchTClassSet(id);
+        } catch (Exception e) {
+            throw new ApiException("School not found!");
+        }
+
+        return schoolMapper.toDtoWithClassList(school);
+    }
+
     public Page<SchoolResponse> getPageStudentByCondition(
             Pageable pageable, String name, Double cutoffScore){
         Page<School> schoolPage = schoolRepository.findPageSchoolBySchool(pageable, name, cutoffScore);
@@ -63,4 +75,5 @@ public class SchoolServiceImpl implements SchoolService{
         schoolRepository.delete(school);
         return schoolMapper.toDto(school);
     }
+
 }

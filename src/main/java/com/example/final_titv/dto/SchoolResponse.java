@@ -10,6 +10,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,6 +24,7 @@ public class SchoolResponse {
     private String phoneNumber;
     private Integer cutoffScore;
 
+private List<String> classList;
 
 //    protected ZonedDateTime createdAt;
 //    protected ZonedDateTime updatedAt;

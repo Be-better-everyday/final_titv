@@ -15,8 +15,8 @@ import java.util.List;
 public interface SchoolRepository extends JpaRepository<School, Integer> {
     public School findByName(String name);
 
-    @Query("SELECT s FROM School s JOIN FETCH s.tClassSet WHERE s.name = ?1 ")
-    public School findByNameJoinFetchTClassSet(String name);
+    @Query("SELECT s FROM School s JOIN FETCH s.tClassSet WHERE s.id = ?1 ")
+    public School findByIdJoinFetchTClassSet(Integer name);
 
     @Query(value = "SELECT * FROM schools s WHERE (:name IS NULL OR s.name ILIKE '%' || :name || '%') " +
             "AND (:cutoffScore is null or s.cutoff_score >= :cutoffScore )",

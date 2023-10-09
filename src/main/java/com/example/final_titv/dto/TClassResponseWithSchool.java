@@ -1,9 +1,7 @@
 package com.example.final_titv.dto;
 
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -16,10 +14,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TClassResponse {
-    private Integer id;
-    @NotBlank
-    private String className;
-    @NotNull
-    private Integer grade;
+public class TClassResponseWithSchool extends TClassResponse{
+    @JsonProperty("school")
+    private SchoolResponse schoolResponse;
 }
