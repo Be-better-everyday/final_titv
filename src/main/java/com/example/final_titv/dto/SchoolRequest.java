@@ -13,7 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class SchoolRequest {
-    private Integer id;
+//    private Integer id;
     @NotBlank
     private String name;
     @NotBlank

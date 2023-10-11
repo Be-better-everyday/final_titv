@@ -19,8 +19,11 @@ public class Student extends Person{
     })
     private TClass tClass;
 
-    public static void main(String[] args) {
-        Student student = new Student();
-        System.out.println(student);
+    public TClass gettClass() {
+        return tClass;
+    }
+
+    public void settClass(TClass tClass) {
+        this.tClass = tClass;
     }
 }

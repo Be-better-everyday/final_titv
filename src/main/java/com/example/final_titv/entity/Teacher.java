@@ -15,26 +15,19 @@ import java.util.Set;
 @NoArgsConstructor
 @Data
 @ToString(exclude = "teacherClasses")
-//@ToString(onlyExplicitlyIncluded = true)
-
-//@SuperBuilder
 @Table(name = "teachers")
 
 public class Teacher extends Person {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String role;
+    @OneToOne(mappedBy ="homeroomTeacher", cascade = {
+            CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.PERSIST, CascadeType.REFRESH
+    })
+    private TClass homeClass;
     @OneToMany(mappedBy ="teacher", cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH
     })
     private Set<TeacherClass> teacherClasses = new HashSet<>();
-//    @OneToMany(cascade = {
-//            CascadeType.DETACH, CascadeType.MERGE,
-//            CascadeType.PERSIST, CascadeType.REFRESH
-//    })
-//    private Set<TClass> tClass;
 
     public void addTClassToTeacherClass(TClass tClass){
         TeacherClass teacherClass = TeacherClass.builder()

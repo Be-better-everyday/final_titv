@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/school")
+@RequestMapping("/schools")
 
 public class SchoolController {
     private SchoolService schoolService;
@@ -28,8 +28,7 @@ public class SchoolController {
 
     @GetMapping("/{id}")
     public ResponseEntity<SchoolResponse> getSchool(@PathVariable Integer id){
-//        return schoolService.getSchoolById(id);
-        return ResponseEntity.ok(schoolService.getSchoolWithClassById(id));
+        return ResponseEntity.ok(schoolService.getSchoolById(id));
     }
 
     @GetMapping("/withClass/{id}")

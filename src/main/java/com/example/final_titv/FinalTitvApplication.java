@@ -39,7 +39,7 @@ public class FinalTitvApplication {
     @Bean
     public CommandLineRunner commandLineRunner() {
         return runner -> {
-            mapperTest(); // Fail !
+//            mapperTest(); // Fail !
         };
     }
 

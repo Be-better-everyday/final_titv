@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/class")
+@RequestMapping("/classes")
 @AllArgsConstructor
 public class TClassController {
     private TClassService tClassService;

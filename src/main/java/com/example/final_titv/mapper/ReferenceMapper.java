@@ -2,6 +2,7 @@ package com.example.final_titv.mapper;
 
 import com.example.final_titv.entity.School;
 import com.example.final_titv.entity.TClass;
+import com.example.final_titv.entity.TeacherClass;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,9 +36,14 @@ public class ReferenceMapper {
     public static Set<String> listingId(Set<TClass> tClassSet){
         return tClassSet.stream().map(TClass::getClassName).collect(Collectors.toSet());
     }
-//    public static void main(String[] args) {
-//        ReferenceMapper referenceMapper = new ReferenceMapper();
-//        School school = referenceMapper.map(1, School.class);
-//        System.out.println(school);
-//    }
+
+    TClass map(Integer value){
+        return entityManager.find(TClass.class, value);
+    }
+
+    Set<String> map(Set<TeacherClass> teacherClassSet){
+        return teacherClassSet.stream()
+                .map(tc -> tc.gettClass().getClassSchool())
+                .collect(Collectors.toSet());
+    }
 }

@@ -3,6 +3,7 @@ package com.example.final_titv.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ import java.util.Set;
 @Data
 @ToString(exclude = {"school", "teacherClasses", "studentSet", "homeroomTeacher"})
 @Table(name = "classes"
-        ,uniqueConstraints = {@UniqueConstraint(columnNames = {"school_id", "class_name"})}
+        , uniqueConstraints = {@UniqueConstraint(columnNames = {"school_id", "class_name"})}
 )
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class TClass extends BaseEntity {
@@ -46,6 +47,9 @@ public class TClass extends BaseEntity {
     })
     private Set<Student> studentSet = new HashSet<>();
 
+    public String getClassSchool() {
+        return String.join("_", className, school.getName());
+    }
 
     public void addStudent(Student student) {
         if (studentSet == null) {

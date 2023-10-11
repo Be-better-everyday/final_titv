@@ -3,6 +3,7 @@ package com.example.final_titv.repository;
 import com.example.final_titv.entity.School;
 import com.example.final_titv.entity.TClass;
 
+import com.example.final_titv.entity.Teacher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,4 +25,8 @@ public interface TClassRepository extends JpaRepository<TClass, Integer> {
             "(:schoolId IS NULL OR c.school_id = :schoolId)",
     nativeQuery = true)
     Page<TClass> getTClassPageableByCondition(String className, Integer schoolId, Pageable pageable);
+
+    @Query(value = "SELECT tc.tClass FROM TeacherClass tc " +
+            "WHERE tc.teacher = :teacher" )
+    List<TClass> findTClassByTeacher(Teacher teacher);
 }

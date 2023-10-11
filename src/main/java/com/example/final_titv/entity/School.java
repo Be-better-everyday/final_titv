@@ -31,6 +31,7 @@ public class School extends BaseEntity{
     private String address;
     @Column(name = "phone_number")
     private String phoneNumber;
+    @Getter
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "school", cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
@@ -56,4 +57,7 @@ public class School extends BaseEntity{
         return Objects.hash(id, name, address, phoneNumber);
     }
 
+    public void settClassSet(Set<TClass> tClassSet) {
+        this.tClassSet = tClassSet;
+    }
 }
