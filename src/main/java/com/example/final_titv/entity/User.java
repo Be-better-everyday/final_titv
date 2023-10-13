@@ -1,10 +1,13 @@
 package com.example.final_titv.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@Data
 @Table(name = "users")
 public class User {
 
