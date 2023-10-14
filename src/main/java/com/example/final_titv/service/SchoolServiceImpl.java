@@ -5,6 +5,7 @@ import com.example.final_titv.dto.SchoolResponse;
 import com.example.final_titv.entity.School;
 import com.example.final_titv.entity.TClass;
 import com.example.final_titv.exception.ApiException;
+import com.example.final_titv.exception.NotFoundException;
 import com.example.final_titv.mapper.SchoolMapper;
 import com.example.final_titv.repository.SchoolRepository;
 import com.example.final_titv.repository.TClassRepository;
@@ -31,9 +32,13 @@ public class SchoolServiceImpl implements SchoolService{
         return schoolMapper.toDto(school);
     }
     public SchoolResponse getSchoolById(Integer id){
-        School school = schoolRepository.findById(id)
-                .orElseThrow(()-> new ApiException("Not Found!"));
+        School school = getSchoolByIdOrThrow(id);
         return schoolMapper.toDto(school);
+    }
+
+    private School getSchoolByIdOrThrow(Integer id) {
+        return schoolRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("School not Found!", School.class));
     }
 
     @Override
@@ -42,7 +47,7 @@ public class SchoolServiceImpl implements SchoolService{
         try {
             school = schoolRepository.findByIdJoinFetchTClassSet(id);
         } catch (Exception e) {
-            throw new ApiException("School not found!");
+            throw new NotFoundException("School not Found!", School.class);
         }
 
         return schoolMapper.toDtoWithClassList(school);
@@ -57,8 +62,7 @@ public class SchoolServiceImpl implements SchoolService{
     }
 
     public SchoolResponse updateSchoolById(Integer id, SchoolRequest schoolRequest) {
-        School school = schoolRepository.findById(id).orElse(null);
-        if(school == null) throw new RuntimeException("School is not found!");
+        School school = getSchoolByIdOrThrow(id);
 
         schoolMapper.updateSchool(schoolRequest, school);
         schoolRepository.save(school);
@@ -66,8 +70,7 @@ public class SchoolServiceImpl implements SchoolService{
     }
 
     public SchoolResponse deleteById(Integer id){
-        School school = schoolRepository.findById(id).orElse(null);
-        if(school == null) throw new RuntimeException("School is not found!");
+        School school = getSchoolByIdOrThrow(id);
 
         List<TClass> tClassList = tClassRepository.findBySchool(school);
         tClassList.forEach(c -> c.setSchool(null));

@@ -4,6 +4,7 @@ import com.example.final_titv.dto.StudentRequest;
 import com.example.final_titv.dto.StudentResponse;
 import com.example.final_titv.entity.Student;
 import com.example.final_titv.exception.ApiException;
+import com.example.final_titv.exception.NotFoundException;
 import com.example.final_titv.mapper.StudentMapper;
 import com.example.final_titv.repository.StudentRepository;
 import jakarta.transaction.Transactional;
@@ -33,15 +34,18 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public StudentResponse getStudentById(Integer id) {
-        Student student = studentRepository.findById(id)
-                .orElseThrow(()-> new ApiException("Student not found!"));
+        Student student = getStudentByIdOrThrow(id);
         return studentMapper.toDto(student);
+    }
+
+    private Student getStudentByIdOrThrow(Integer id) {
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Student not found!", Student.class));
     }
 
     @Override
     public StudentResponse updateStudent(StudentRequest studentRequest, Integer id) {
-        Student student = studentRepository.findById(id)
-                .orElseThrow(()-> new ApiException("Student not found!"));
+        Student student = getStudentByIdOrThrow(id);
         studentMapper.updateStudent(studentRequest, student);
 
         studentRepository.saveAndFlush(student);
@@ -51,8 +55,7 @@ public class StudentServiceImpl implements StudentService{
     @Override
     @Transactional
     public StudentResponse deleteStudentById(Integer id) {
-        Student student = studentRepository.findById(id)
-                .orElseThrow(()-> new ApiException("Student not found!"));
+        Student student = getStudentByIdOrThrow(id);
         studentRepository.delete(student);
         return studentMapper.toDto(student);
     }

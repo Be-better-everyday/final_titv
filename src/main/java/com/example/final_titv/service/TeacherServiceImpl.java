@@ -5,6 +5,7 @@ import com.example.final_titv.dto.TeacherResponse;
 import com.example.final_titv.entity.TClass;
 import com.example.final_titv.entity.Teacher;
 import com.example.final_titv.exception.ApiException;
+import com.example.final_titv.exception.NotFoundException;
 import com.example.final_titv.mapper.TeacherMapper;
 import com.example.final_titv.repository.TClassRepository;
 import com.example.final_titv.repository.TeacherRepository;
@@ -36,9 +37,13 @@ public class TeacherServiceImpl implements TeacherService{
 
     @Override
     public TeacherResponse getTeacherById(Integer id) {
-        Teacher teacher = teacherRepository.findById(id)
-                .orElseThrow(()-> new ApiException("Teacher not found!"));
+        Teacher teacher = getTeacherByIdOrThrow(id);
         return teacherMapper.toDto(teacher);
+    }
+
+    private Teacher getTeacherByIdOrThrow(Integer id) {
+        return teacherRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Teacher not found!", Teacher.class));
     }
 
     @Override
@@ -52,8 +57,7 @@ public class TeacherServiceImpl implements TeacherService{
     @Override
     @Transactional
     public TeacherResponse deleteTeacherById(Integer id) {
-        Teacher teacher = teacherRepository.findById(id)
-                .orElseThrow(() -> new ApiException("Teacher not found!"));
+        Teacher teacher = getTeacherByIdOrThrow(id);
 
         teacherRepository.delete(teacher);
         return teacherMapper.toDto(teacher);
@@ -61,8 +65,7 @@ public class TeacherServiceImpl implements TeacherService{
 
     @Override
     public TeacherResponse updateTeacherById(Integer id, TeacherRequest teacherRequest) {
-        Teacher teacher = teacherRepository.findById(id)
-                .orElseThrow(()-> new ApiException("Teacher not found!"));
+        Teacher teacher = getTeacherByIdOrThrow(id);
 
         teacherMapper.updateTeacher(teacherRequest, teacher);
 
@@ -74,10 +77,9 @@ public class TeacherServiceImpl implements TeacherService{
     @Transactional
     public TeacherResponse addTClassToTeacher(Integer classId, Integer id) {
         TClass tClass = tClassRepository.findById(classId)
-                .orElseThrow(() -> new ApiException("TClass not found!"));
+                .orElseThrow(() -> new NotFoundException("TClass not found!", TClass.class));
 
-        Teacher teacher = teacherRepository.findById(id)
-                .orElseThrow(() -> new ApiException("Teacher not found!"));
+        Teacher teacher = getTeacherByIdOrThrow(id);
 
         teacher.addTClassToTeacherClass(tClass);
         teacherRepository.saveAndFlush(teacher);

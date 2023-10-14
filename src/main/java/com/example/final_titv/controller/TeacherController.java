@@ -1,11 +1,14 @@
 package com.example.final_titv.controller;
 
+import com.example.final_titv.dto.ErrorResponse;
 import com.example.final_titv.dto.TeacherRequest;
 import com.example.final_titv.dto.TeacherResponse;
+import com.example.final_titv.exception.NotFoundException;
 import com.example.final_titv.service.TeacherService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -60,4 +63,7 @@ public class TeacherController {
     ){
         return teacherService.addTClassToTeacher(classId, id);
     }
+
+
+
 }

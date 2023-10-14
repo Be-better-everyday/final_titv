@@ -5,6 +5,7 @@ import com.example.final_titv.dto.TClassRequest;
 import com.example.final_titv.dto.TClassResponse;
 import com.example.final_titv.entity.TClass;
 import com.example.final_titv.exception.ApiException;
+import com.example.final_titv.exception.NotFoundException;
 import com.example.final_titv.mapper.TClassMapper;
 import com.example.final_titv.repository.SchoolRepository;
 import com.example.final_titv.repository.TClassRepository;
@@ -22,7 +23,7 @@ public class TClassServiceImpl implements TClassService{
 
     private TClass getTClassEntityById(Integer id) {
         return tClassRepository.findById(id)
-                .orElseThrow(() -> new ApiException("TClass not found!"));
+                .orElseThrow(() -> new NotFoundException("TClass not found!", TClass.class));
     }
     @Override
     /*  This method may throw "PSQLException: ERROR: duplicate key value violates unique constraint" */

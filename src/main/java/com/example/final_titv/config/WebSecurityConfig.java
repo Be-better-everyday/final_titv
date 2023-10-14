@@ -1,5 +1,7 @@
 package com.example.final_titv.config;
 
+import com.example.final_titv.exception.CustomAccessDeniedHandler;
+import com.example.final_titv.exception.CustomAuthenticationFailureHandler;
 import com.example.final_titv.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +13,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+
 
 @Configuration
 public class WebSecurityConfig {
@@ -37,22 +42,62 @@ public class WebSecurityConfig {
         auth.authenticationProvider(authenticationProvider());
     }
 
-        @Bean
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
-                configurer->configurer
+//        http.authorizeRequests(
+                configurer -> configurer
+                        .requestMatchers("/users/**").permitAll()
                         .requestMatchers(HttpMethod.GET).hasAnyAuthority(
-                                "TEACHER", "EDITOR", "ADMIN", "USER")
-//                        .requestMatchers(HttpMethod.GET, "api/students/**").hasAnyRole("TEACHER", "MANAGER", "ADMIN")
+                                "CREATOR", "EDITOR", "ADMIN", "USER")
                         .requestMatchers(HttpMethod.POST).hasAnyAuthority("EDITOR", "ADMIN")
                         .requestMatchers(HttpMethod.PUT).hasAnyAuthority("EDITOR", "ADMIN")
                         .requestMatchers(HttpMethod.DELETE).hasAnyAuthority("ADMIN")
-        );
+                );
+
+//                .failureHandler(authenticationFailureHandler())
+//                .accessDeniedHandler(accessDeniedHandler());
+//          http.authorizeRequests()
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .formLogin()
+//                .failureHandler(authenticationFailureHandler())
+//                .and()
+//                .exceptionHandling()
+//                .accessDeniedHandler(accessDeniedHandler());
+
 
         http.httpBasic(Customizer.withDefaults());
 
         // Chống giả mạo trạng thái ==> Đọc thêm
-        http.csrf(csrf->csrf.disable());
+        http.csrf(csrf -> csrf.disable());
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        return new CustomAuthenticationFailureHandler();
+    }
+
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http.authorizeRequests()
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .formLogin()
+//                .failureHandler(authenticationFailureHandler());
+//        return http.build();
+//    }
+
+//    @Bean
+//    public AuthenticationSuccessHandler authenticationSuccessHandler() {
+//        return new CustomAuthenticationSuccessHandler();
+//    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
     }
 }
