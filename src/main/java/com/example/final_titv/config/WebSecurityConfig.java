@@ -44,28 +44,28 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(
-//        http.authorizeRequests(
-                configurer -> configurer
-                        .requestMatchers("/users/**").permitAll()
-                        .requestMatchers(HttpMethod.GET).hasAnyAuthority(
-                                "CREATOR", "EDITOR", "ADMIN", "USER")
-                        .requestMatchers(HttpMethod.POST).hasAnyAuthority("EDITOR", "ADMIN")
-                        .requestMatchers(HttpMethod.PUT).hasAnyAuthority("EDITOR", "ADMIN")
-                        .requestMatchers(HttpMethod.DELETE).hasAnyAuthority("ADMIN")
-                );
+//        http.authorizeHttpRequests(
+//                configurer -> configurer
+//                        .requestMatchers("/users/**").permitAll()
+//                        .requestMatchers(HttpMethod.GET).hasAnyAuthority(
+//                                "CREATOR", "EDITOR", "ADMIN", "USER")
+//                        .requestMatchers(HttpMethod.POST).hasAnyAuthority("EDITOR", "ADMIN")
+//                        .requestMatchers(HttpMethod.PUT).hasAnyAuthority("EDITOR", "ADMIN")
+//                        .requestMatchers(HttpMethod.DELETE).hasAnyAuthority("ADMIN")
+//                );
 
+//http.formLogin()
 //                .failureHandler(authenticationFailureHandler())
 //                .accessDeniedHandler(accessDeniedHandler());
-//          http.authorizeRequests()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .formLogin()
-//                .failureHandler(authenticationFailureHandler())
-//                .and()
-//                .exceptionHandling()
-//                .accessDeniedHandler(accessDeniedHandler());
+          http.authorizeRequests()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin()
+                .failureHandler(authenticationFailureHandler())
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler());
 
 
         http.httpBasic(Customizer.withDefaults());

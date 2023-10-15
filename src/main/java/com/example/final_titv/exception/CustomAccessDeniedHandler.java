@@ -24,6 +24,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
             AccessDeniedException exception
     ) throws IOException, ServletException {
         HttpStatus httpStatus = HttpStatus.FORBIDDEN; // 403
+        System.out.println("403");
 
         Map<String, Object> data = new HashMap<>();
         data.put("timestamp",new Date());

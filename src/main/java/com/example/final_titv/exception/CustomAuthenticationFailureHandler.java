@@ -24,6 +24,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
             AuthenticationException exception  // in spring security
     ) throws IOException, ServletException {
         HttpStatus httpStatus = HttpStatus.UNAUTHORIZED; // 401
+        System.out.println("401");
 
         Map<String, Object> data = new HashMap<>();
         data.put(
