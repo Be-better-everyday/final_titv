@@ -1,6 +1,10 @@
 package com.example.final_titv.config;
 
+import com.example.final_titv.exception.CustomAccessDeniedHandler;
+//import com.example.final_titv.exception.CustomAuthenticationFailureHandler;
 import com.example.final_titv.service.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -10,10 +14,17 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @Configuration
 public class WebSecurityConfig {
+    @Autowired
+    @Qualifier("customAuthenticationEntryPoint")
+    AuthenticationEntryPoint authEntryPoint;
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();
@@ -47,12 +58,29 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.POST).hasAnyAuthority("EDITOR", "ADMIN")
                         .requestMatchers(HttpMethod.PUT).hasAnyAuthority("EDITOR", "ADMIN")
                         .requestMatchers(HttpMethod.DELETE).hasAnyAuthority("ADMIN")
-        );
+        )
+                .exceptionHandling()
+                .authenticationEntryPoint(authEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler())
+//        .accessDeniedPage("/hello");
+                .accessDeniedHandler(accessDeniedHandler())
+        ;
+
 
         http.httpBasic(Customizer.withDefaults());
 
         // Chống giả mạo trạng thái ==> Đọc thêm
         http.csrf(csrf->csrf.disable());
         return http.build();
+    }
+
+//    @Bean
+//    public AuthenticationFailureHandler authenticationFailureHandler() {
+//        return new CustomAuthenticationFailureHandler();
+//    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
     }
 }
