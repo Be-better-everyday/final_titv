@@ -3,15 +3,13 @@ package com.example.final_titv.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
 public class SchoolRequest {
 //    private Integer id;
     @NotBlank
