@@ -11,7 +11,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -20,6 +22,8 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
     @Autowired
     @Qualifier("customAuthenticationEntryPoint")
@@ -52,6 +56,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
                 configurer->configurer
+                        .requestMatchers("/users/register/**").permitAll()
+                        .requestMatchers("/users/changePassword").authenticated()
                         .requestMatchers(HttpMethod.GET).hasAnyAuthority(
                                 "CREATOR", "EDITOR", "ADMIN", "USER")
 //                        .requestMatchers(HttpMethod.GET, "api/students/**").hasAnyRole("TEACHER", "MANAGER", "ADMIN")
@@ -59,10 +65,9 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.PUT).hasAnyAuthority("EDITOR", "ADMIN")
                         .requestMatchers(HttpMethod.DELETE).hasAnyAuthority("ADMIN")
         )
-//                .exceptionHandling()
-//                .authenticationEntryPoint(authEntryPoint)
-//                .accessDeniedHandler(accessDeniedHandler())
-////        .accessDeniedPage("/hello");
+                .exceptionHandling()
+                .authenticationEntryPoint(authEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler())
 //                .accessDeniedHandler(accessDeniedHandler())
         ;
 

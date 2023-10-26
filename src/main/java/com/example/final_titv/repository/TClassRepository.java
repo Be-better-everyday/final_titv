@@ -24,9 +24,14 @@ public interface TClassRepository extends JpaRepository<TClass, Integer> {
             "(:className IS NULL OR c.class_name ILIKE '%' || :className || '%') AND" +
             "(:schoolId IS NULL OR c.school_id = :schoolId)",
     nativeQuery = true)
-    Page<TClass> getTClassPageableByCondition(String className, Integer schoolId, Pageable pageable);
+    public Page<TClass> getTClassPageableByCondition(String className, Integer schoolId, Pageable pageable);
 
     @Query(value = "SELECT tc.tClass FROM TeacherClass tc " +
             "WHERE tc.teacher = :teacher" )
-    List<TClass> findTClassByTeacher(Teacher teacher);
+    public List<TClass> findTClassByTeacher(Teacher teacher);
+
+    @Query(value = "SELECT c FROM TClass c " +
+            "WHERE c.homeroomTeacher = ?1")
+    public TClass findTClassByHomeTeacher(Teacher teacher);
+//    public TClass findByStudent
 }

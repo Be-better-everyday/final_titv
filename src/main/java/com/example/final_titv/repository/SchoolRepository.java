@@ -24,4 +24,6 @@ public interface SchoolRepository extends JpaRepository<School, Integer> {
 //    @Query(value = "SELECT * FROM schools s WHERE (:name IS NULL OR s.name ILIKE '%' || :name || '%') "
 //            , nativeQuery = true)
     public Page<School> findPageSchoolBySchool(Pageable pageable, String name, Double cutoffScore);
+
+
 }

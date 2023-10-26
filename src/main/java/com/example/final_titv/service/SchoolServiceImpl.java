@@ -5,12 +5,14 @@ import com.example.final_titv.dto.SchoolResponse;
 import com.example.final_titv.entity.School;
 import com.example.final_titv.entity.TClass;
 import com.example.final_titv.exception.ApiException;
+import com.example.final_titv.exception.CustomErrorException;
 import com.example.final_titv.mapper.SchoolMapper;
 import com.example.final_titv.repository.SchoolRepository;
 import com.example.final_titv.repository.TClassRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,7 +34,7 @@ public class SchoolServiceImpl implements SchoolService{
     }
     public SchoolResponse getSchoolById(Integer id){
         School school = schoolRepository.findById(id)
-                .orElseThrow(()-> new ApiException("Not Found!"));
+                .orElseThrow(()-> new CustomErrorException(HttpStatus.NOT_FOUND, "Not Found!"));
         return schoolMapper.toDto(school);
     }
 
@@ -42,7 +44,7 @@ public class SchoolServiceImpl implements SchoolService{
         try {
             school = schoolRepository.findByIdJoinFetchTClassSet(id);
         } catch (Exception e) {
-            throw new ApiException("School not found!");
+            throw new CustomErrorException(HttpStatus.NOT_FOUND, "School not found!");
         }
 
         return schoolMapper.toDtoWithClassList(school);
@@ -70,7 +72,9 @@ public class SchoolServiceImpl implements SchoolService{
         if(school == null) throw new RuntimeException("School is not found!");
 
         List<TClass> tClassList = tClassRepository.findBySchool(school);
-        tClassList.forEach(c -> c.setSchool(null));
+        if (tClassList != null) {
+            tClassList.forEach(c -> c.setSchool(null));
+        }
 
         schoolRepository.delete(school);
         return schoolMapper.toDto(school);

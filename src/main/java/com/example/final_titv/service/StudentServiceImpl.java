@@ -4,12 +4,14 @@ import com.example.final_titv.dto.StudentRequest;
 import com.example.final_titv.dto.StudentResponse;
 import com.example.final_titv.entity.Student;
 import com.example.final_titv.exception.ApiException;
+import com.example.final_titv.exception.CustomErrorException;
 import com.example.final_titv.mapper.StudentMapper;
 import com.example.final_titv.repository.StudentRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,14 +36,14 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public StudentResponse getStudentById(Integer id) {
         Student student = studentRepository.findById(id)
-                .orElseThrow(()-> new ApiException("Student not found!"));
+                .orElseThrow(()-> new CustomErrorException(HttpStatus.NOT_FOUND, "Student not found!"));
         return studentMapper.toDto(student);
     }
 
     @Override
     public StudentResponse updateStudent(StudentRequest studentRequest, Integer id) {
         Student student = studentRepository.findById(id)
-                .orElseThrow(()-> new ApiException("Student not found!"));
+                .orElseThrow(()-> new CustomErrorException(HttpStatus.NOT_FOUND, "Student not found!"));
         studentMapper.updateStudent(studentRequest, student);
 
         studentRepository.saveAndFlush(student);
@@ -52,7 +54,7 @@ public class StudentServiceImpl implements StudentService{
     @Transactional
     public StudentResponse deleteStudentById(Integer id) {
         Student student = studentRepository.findById(id)
-                .orElseThrow(()-> new ApiException("Student not found!"));
+                .orElseThrow(()-> new CustomErrorException(HttpStatus.NOT_FOUND, "Student not found!"));
         studentRepository.delete(student);
         return studentMapper.toDto(student);
     }
